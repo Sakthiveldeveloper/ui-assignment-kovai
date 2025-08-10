@@ -1,4 +1,3 @@
-// Responsive breakpoints and utilities
 export const breakpoints = {
   xs: 480,
   sm: 576,
@@ -38,7 +37,6 @@ export const getResponsiveMargin = (mobile: number, tablet: number, desktop: num
   return getResponsiveValue(mobile, tablet, desktop);
 };
 
-// Responsive grid configurations
 export const responsiveCols = {
   xs: 24,
   sm: 12,
@@ -55,7 +53,6 @@ export const responsiveGutter = {
   xl: 40,
 };
 
-// Responsive spacing scale
 export const spacing = {
   xs: 4,
   sm: 8,
@@ -66,7 +63,6 @@ export const spacing = {
   xxxl: 64,
 };
 
-// Responsive font sizes
 export const fontSizes = {
   xs: '12px',
   sm: '14px',
@@ -79,7 +75,6 @@ export const fontSizes = {
   hero: '64px',
 };
 
-// Responsive component sizes
 export const componentSizes = {
   button: {
     mobile: { height: 40, fontSize: '14px', padding: '0 16px' },

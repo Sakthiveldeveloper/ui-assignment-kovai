@@ -8,7 +8,7 @@ import {
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 
-import "./Chat.css";
+import "../style/Chat.css";
 
 const { Header, Content } = Layout;
 const { Title, Paragraph, Text } = Typography;
@@ -57,7 +57,6 @@ const Chat: React.FC = () => {
     setInputValue("");
     setIsTyping(true);
 
-    // Simulate AI response
     setTimeout(() => {
       const aiResponse = generateAIResponse();
       const aiMessage: Message = {
@@ -96,7 +95,6 @@ const Chat: React.FC = () => {
 
   return (
     <Layout className="chat-layout">
-      {/* Header */}
       <Header className="chat-header">
         <div className="header-left-section">
           <Button 
@@ -133,9 +131,7 @@ const Chat: React.FC = () => {
         </div>
       </Header>
 
-      {/* Chat Content */}
       <Content className="chat-content">
-        {/* Chat Window */}
         <div className="chat-window">
           {messages.map((message) => (
             <div
@@ -164,7 +160,6 @@ const Chat: React.FC = () => {
             </div>
           ))}
           
-          {/* AI Typing Animation */}
           {isTyping && (
             <div className="typing-container">
               <div className="typing-content">
@@ -186,7 +181,6 @@ const Chat: React.FC = () => {
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Message Input Area */}
         <div className="input-area">
           <div className="input-container">
             <TextArea

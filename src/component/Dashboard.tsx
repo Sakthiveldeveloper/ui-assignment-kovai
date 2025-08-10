@@ -14,7 +14,7 @@ import {
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useResponsive } from "../hooks/useResponsive";
-import "./Dashboard.css";
+import "../style/Dashboard.css";
 
 const { Header, Sider, Content } = Layout;
 const { Title, Paragraph, Text } = Typography;
@@ -120,7 +120,6 @@ const Dashboard: React.FC = () => {
         </Header>
         
         <Content className="dashboard-content">
-          {/* User Stats Section */}
           <Row gutter={[16, 16]} className="stats-row">
             <Col xs={24} sm={12} md={6}>
               <Card hoverable className="stats-card">
@@ -171,7 +170,6 @@ const Dashboard: React.FC = () => {
             </Col>
           </Row>
 
-          {/* Service Overview Cards */}
           <Row gutter={[16, 16]} className="service-row">
             <Col xs={24} lg={12}>
               <Card 
@@ -271,7 +269,6 @@ const Dashboard: React.FC = () => {
             </Col>
           </Row>
 
-          {/* Demo Services Preview */}
           <Card 
             title={<span className="service-card-title">
               Demo Services Preview

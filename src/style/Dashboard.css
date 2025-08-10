@@ -1,4 +1,4 @@
-/* Dashboard Layout Styles */
+
 .dashboard-layout {
   min-height: 100vh;
 }
@@ -92,8 +92,7 @@
   min-height: 280px;
   background: transparent;
 }
-
-/* Stats Cards */
+  
 .stats-row {
   margin-bottom: 32px;
 }
@@ -149,7 +148,6 @@
   margin-top: 12px;
 }
 
-/* Service Cards */
 .service-card {
   height: 100%;
   border-radius: 12px;
@@ -238,7 +236,6 @@
   color: #666;
 }
 
-/* Quick Actions */
 .quick-actions-card {
   height: 100%;
   border-radius: 12px;
@@ -261,7 +258,6 @@
   font-size: 14px;
 }
 
-/* Demo Services */
 .demo-services-card {
   margin-bottom: 24px;
   border-radius: 12px;
@@ -332,8 +328,7 @@
   height: 40px;
   font-size: 14px;
 }
-
-/* Responsive Styles */
+    
 @media (max-width: 768px) {
   .dashboard-content {
     margin: 16px;
