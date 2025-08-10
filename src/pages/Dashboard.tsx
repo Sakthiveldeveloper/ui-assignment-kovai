@@ -14,14 +14,14 @@ import {
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useResponsive } from "../hooks/useResponsive";
-import { getResponsiveValue, spacing, fontSizes, componentSizes } from "../utils/responsive";
+import "./Dashboard.css";
 
 const { Header, Sider, Content } = Layout;
 const { Title, Paragraph, Text } = Typography;
 
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
-  const { isMobile, isTablet, screenWidth } = useResponsive();
+  const { isMobile, isTablet } = useResponsive();
   const [collapsed, setCollapsed] = useState(false);
 
   const handleMenuClick = (key: string) => {
@@ -66,53 +66,22 @@ const Dashboard: React.FC = () => {
     },
   ];
 
-  // Responsive values
-  const headerHeight = getResponsiveValue(56, 60, 64);
-  const headerPadding = getResponsiveValue(12, 14, 16);
-  const contentMargin = getResponsiveValue(12, 16, 24);
-  const contentPadding = getResponsiveValue(16, 20, 24);
-  const cardPadding = getResponsiveValue(12, 16, 20);
-  const cardBorderRadius = getResponsiveValue(8, 12, 16);
-  const avatarSize = getResponsiveValue(32, 40, 48);
-  const titleFontSize = getResponsiveValue(fontSizes.md, fontSizes.lg, fontSizes.xl);
-  const subtitleFontSize = getResponsiveValue(fontSizes.sm, fontSizes.md, fontSizes.lg);
-  const statFontSize = getResponsiveValue(fontSizes.lg, fontSizes.xl, fontSizes.xxl);
-  const buttonHeight = getResponsiveValue(36, 40, 48);
-
   return (
-    <Layout style={{ minHeight: "100vh" }}>
+    <Layout className="dashboard-layout">
       <Sider 
         collapsible 
         collapsed={collapsed} 
         onCollapse={setCollapsed}
-        style={{ 
-          background: "#001529",
-          boxShadow: "2px 0 8px rgba(0,0,0,0.15)"
-        }}
+        className="dashboard-sider"
         breakpoint="lg"
         collapsedWidth="0"
         trigger={null}
-        width={getResponsiveValue(200, 220, 240)}
+        width={240}
       >
-        <div style={{ 
-          height: headerHeight, 
-          display: "flex", 
-          alignItems: "center", 
-          justifyContent: "center",
-          borderBottom: "1px solid #1f1f1f",
-          background: "#002140",
-          padding: `0 ${getResponsiveValue(12, 14, 16)}px`
-        }}>
-          <RobotOutlined style={{ 
-            fontSize: getResponsiveValue(20, 22, 24), 
-            color: "#1890ff" 
-          }} />
+        <div className="dashboard-sider-header">
+          <RobotOutlined className="sider-logo" />
           {!collapsed && (
-            <Title level={4} style={{ 
-              color: "white", 
-              margin: `0 0 0 ${getResponsiveValue(8, 10, 12)}px`,
-              fontSize: getResponsiveValue(fontSizes.sm, fontSizes.md, fontSizes.lg)
-            }}>
+            <Title level={4} className="sider-title">
               AI Chat Pro
             </Title>
           )}
@@ -123,135 +92,79 @@ const Dashboard: React.FC = () => {
           defaultSelectedKeys={["dashboard"]}
           items={menuItems}
           onClick={({ key }) => handleMenuClick(key)}
-          style={{ borderRight: 0 }}
         />
       </Sider>
       
       <Layout>
-        <Header style={{ 
-          background: "#fff", 
-          padding: `0 ${headerPadding}px`, 
-          borderBottom: "1px solid #f0f0f0",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          boxShadow: "0 1px 4px rgba(0,0,0,0.08)",
-          height: `${headerHeight}px`,
-          lineHeight: `${headerHeight}px`
-        }}>
-          <div style={{ display: "flex", alignItems: "center", gap: getResponsiveValue(12, 14, 16) }}>
+        <Header className="dashboard-header">
+          <div className="header-left">
             <Button 
               type="text" 
               icon={<DashboardOutlined />} 
               onClick={() => setCollapsed(!collapsed)}
-              style={{ 
-                fontSize: getResponsiveValue(14, 15, 16), 
-                height: getResponsiveValue(32, 36, 40),
-                display: isMobile || isTablet ? "flex" : "none"
-              }}
+              className={`menu-toggle-btn ${isMobile || isTablet ? 'mobile-only' : 'desktop-only'}`}
             />
-            <Title level={4} style={{ 
-              margin: 0, 
-              color: "#262626",
-              fontSize: titleFontSize
-            }}>
+            <Title level={4} className="dashboard-title">
               Dashboard
             </Title>
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: getResponsiveValue(12, 14, 16) }}>
+          <div className="header-right">
             <Avatar 
               icon={<UserOutlined />} 
-              style={{ 
-                backgroundColor: "#1890ff",
-                width: `${avatarSize}px`,
-                height: `${avatarSize}px`
-              }} 
+              className="user-avatar"
             />
-            <Text strong style={{ 
-              color: "#262626",
-              display: isMobile ? "none" : "inline",
-              fontSize: subtitleFontSize
-            }}>
+            <Text strong className={`user-welcome ${isMobile ? 'mobile-hidden' : ''}`}>
               Welcome back, User!
             </Text>
           </div>
         </Header>
         
-        <Content style={{ 
-          margin: `${contentMargin}px`, 
-          minHeight: 280,
-          background: "transparent"
-        }}>
+        <Content className="dashboard-content">
           {/* User Stats Section */}
-          <Row gutter={[getResponsiveValue(12, 14, 16), getResponsiveValue(12, 14, 16)]} 
-               style={{ marginBottom: getResponsiveValue(20, 24, 32) }}>
+          <Row gutter={[16, 16]} className="stats-row">
             <Col xs={24} sm={12} md={6}>
-              <Card hoverable style={{ 
-                borderRadius: `${cardBorderRadius}px`,
-                padding: `${cardPadding}px`
-              }}>
+              <Card hoverable className="stats-card">
                 <Statistic
                   title="Total Chats"
                   value={1247}
-                  prefix={<MessageOutlined style={{ color: "#1890ff" }} />}
-                  valueStyle={{ 
-                    color: "#1890ff", 
-                    fontSize: statFontSize
-                  }}
+                  prefix={<MessageOutlined className="stats-icon blue" />}
+                  valueStyle={{ color: "#1890ff", fontSize: 24 }}
                 />
-                <Progress percent={85} showInfo={false} style={{ marginTop: 12 }} strokeColor="#1890ff" />
+                <Progress percent={85} showInfo={false} className="stats-progress" strokeColor="#1890ff" />
               </Card>
             </Col>
             <Col xs={24} sm={12} md={6}>
-              <Card hoverable style={{ 
-                borderRadius: `${cardBorderRadius}px`,
-                padding: `${cardPadding}px`
-              }}>
+              <Card hoverable className="stats-card">
                 <Statistic
                   title="AI Accuracy"
                   value={94.2}
                   suffix="%"
-                  prefix={<CheckCircleOutlined style={{ color: "#52c41a" }} />}
-                  valueStyle={{ 
-                    color: "#52c41a", 
-                    fontSize: statFontSize
-                  }}
+                  prefix={<CheckCircleOutlined className="stats-icon green" />}
+                  valueStyle={{ color: "#52c41a", fontSize: 24 }}
                 />
-                <Progress percent={94} showInfo={false} style={{ marginTop: 12 }} strokeColor="#52c41a" />
+                <Progress percent={94} showInfo={false} className="stats-progress" strokeColor="#52c41a" />
               </Card>
             </Col>
             <Col xs={24} sm={12} md={6}>
-              <Card hoverable style={{ 
-                borderRadius: `${cardBorderRadius}px`,
-                padding: `${cardPadding}px`
-              }}>
+              <Card hoverable className="stats-card">
                 <Statistic
                   title="Response Time"
                   value={1.2}
                   suffix="s"
                   prefix={<ClockCircleOutlined style={{ color: "#faad14" }} />}
-                  valueStyle={{ 
-                    color: "#faad14", 
-                    fontSize: statFontSize
-                  }}
+                  valueStyle={{ color: "#faad14", fontSize: 24 }}
                 />
                 <Progress percent={78} showInfo={false} style={{ marginTop: 12 }} strokeColor="#faad14" />
               </Card>
             </Col>
             <Col xs={24} sm={12} md={6}>
-              <Card hoverable style={{ 
-                borderRadius: `${cardBorderRadius}px`,
-                padding: `${cardPadding}px`
-              }}>
+              <Card hoverable className="stats-card">
                 <Statistic
                   title="Customer Rating"
                   value={4.8}
                   suffix={<StarOutlined style={{ color: "#722ed1" }} />}
                   prefix={<RiseOutlined style={{ color: "#722ed1" }} />}
-                  valueStyle={{ 
-                    color: "#722ed1", 
-                    fontSize: statFontSize
-                  }}
+                  valueStyle={{ color: "#722ed1", fontSize: 24 }}
                 />
                 <Progress percent={96} showInfo={false} style={{ marginTop: 12 }} strokeColor="#722ed1" />
               </Card>
@@ -259,106 +172,60 @@ const Dashboard: React.FC = () => {
           </Row>
 
           {/* Service Overview Cards */}
-          <Row gutter={[getResponsiveValue(12, 14, 16), getResponsiveValue(12, 14, 16)]} 
-               style={{ marginBottom: getResponsiveValue(20, 24, 32) }}>
+          <Row gutter={[16, 16]} className="service-row">
             <Col xs={24} lg={12}>
               <Card 
-                title={<span style={{ 
-                  fontSize: subtitleFontSize, 
-                  fontWeight: 600 
-                }}>
+                title={<span className="service-card-title">
                   Active Services
                 </span>}
                 extra={<Button type="primary" size="small">View All</Button>}
-                style={{ 
-                  height: "100%", 
-                  borderRadius: `${cardBorderRadius}px`,
-                  padding: `${cardPadding}px`
-                }}
+                className="service-card"
                 hoverable
               >
-                <div style={{ display: "flex", flexDirection: "column", gap: getResponsiveValue(12, 14, 16) }}>
-                  <div style={{ 
-                    display: "flex", 
-                    justifyContent: "space-between", 
-                    alignItems: "center",
-                    padding: `${cardPadding}px`,
-                    background: "#f8f9fa",
-                    borderRadius: `${cardBorderRadius - 4}px`,
-                    border: "1px solid #e8e8e8"
-                  }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: getResponsiveValue(8, 10, 12) }}>
-                      <RobotOutlined style={{ 
-                        color: "#1890ff", 
-                        fontSize: getResponsiveValue(16, 18, 20) 
-                      }} />
-                      <div>
-                        <Text strong style={{ 
-                          fontSize: subtitleFontSize
-                        }}>
+                <div className="service-items-container">
+                  <div className="service-item">
+                    <div className="service-info">
+                                              <RobotOutlined className="service-icon blue" />
+                      <div className="service-details">
+                        <Text strong className="service-name">
                           Customer Support Bot
                         </Text>
                         <br />
-                        <Text type="secondary" style={{ 
-                          fontSize: getResponsiveValue(fontSizes.xs, fontSizes.sm, fontSizes.md)
-                        }}>
+                        <Text type="secondary" className="service-status">
                           Online - 24/7
                         </Text>
                       </div>
                     </div>
-                    <div style={{ textAlign: "right" }}>
-                      <Text strong style={{ 
-                        fontSize: subtitleFontSize
-                      }}>
+                    <div className="service-stats">
+                      <Text strong className="service-count">
                         1,247 chats
                       </Text>
                       <br />
-                      <Text type="secondary" style={{ 
-                        fontSize: getResponsiveValue(fontSizes.xs, fontSizes.sm, fontSizes.md)
-                      }}>
+                      <Text type="secondary" className="service-period">
                         This month
                       </Text>
                     </div>
                   </div>
                   
-                  <div style={{ 
-                    display: "flex", 
-                    justifyContent: "space-between", 
-                    alignItems: "center",
-                    padding: `${cardPadding}px`,
-                    background: "#f8f9fa",
-                    borderRadius: `${cardBorderRadius - 4}px`,
-                    border: "1px solid #e8e8e8"
-                  }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: getResponsiveValue(8, 10, 12) }}>
-                      <RobotOutlined style={{ 
-                        color: "#52c41a", 
-                        fontSize: getResponsiveValue(16, 18, 20) 
-                      }} />
-                      <div>
-                        <Text strong style={{ 
-                          fontSize: subtitleFontSize
-                        }}>
+                  <div className="service-item">
+                    <div className="service-info">
+                                              <RobotOutlined className="service-icon green" />
+                      <div className="service-details">
+                        <Text strong className="service-name">
                           Sales Assistant
                         </Text>
                         <br />
-                        <Text type="secondary" style={{ 
-                          fontSize: getResponsiveValue(fontSizes.xs, fontSizes.sm, fontSizes.md)
-                        }}>
+                        <Text type="secondary" className="service-status">
                           Online - 9AM-6PM
                         </Text>
                       </div>
                     </div>
-                    <div style={{ textAlign: "right" }}>
-                      <Text strong style={{ 
-                        fontSize: subtitleFontSize
-                      }}>
+                    <div className="service-stats">
+                      <Text strong className="service-count">
                         892 chats
                       </Text>
                       <br />
-                      <Text type="secondary" style={{ 
-                        fontSize: getResponsiveValue(fontSizes.xs, fontSizes.sm, fontSizes.md)
-                      }}>
+                      <Text type="secondary" className="service-period">
                         This month
                       </Text>
                     </div>
@@ -369,55 +236,33 @@ const Dashboard: React.FC = () => {
             
             <Col xs={24} lg={12}>
               <Card 
-                title={<span style={{ 
-                  fontSize: subtitleFontSize, 
-                  fontWeight: 600 
-                }}>
+                title={<span className="service-card-title">
                   Quick Actions
                 </span>}
-                style={{ 
-                  height: "100%", 
-                  borderRadius: `${cardBorderRadius}px`,
-                  padding: `${cardPadding}px`
-                }}
+                className="quick-actions-card"
                 hoverable
               >
-                <Space direction="vertical" style={{ width: "100%" }} size="middle">
+                <Space direction="vertical" className="quick-actions-space" size="middle">
                   <Button 
                     type="primary" 
                     size="large" 
                     icon={<MessageOutlined />}
                     onClick={handleTryDemo}
-                    style={{ 
-                      width: "100%", 
-                      height: `${buttonHeight}px`, 
-                      borderRadius: `${cardBorderRadius - 4}px`,
-                      fontSize: subtitleFontSize
-                    }}
+                    className="action-button"
                   >
                     Try Demo
                   </Button>
                   <Button 
                     size="large" 
                     icon={<SettingOutlined />}
-                    style={{ 
-                      width: "100%", 
-                      height: `${buttonHeight}px`, 
-                      borderRadius: `${cardBorderRadius - 4}px`,
-                      fontSize: subtitleFontSize
-                    }}
+                    className="action-button"
                   >
                     Configure New Bot
                   </Button>
                   <Button 
                     size="large" 
                     icon={<RiseOutlined />}
-                    style={{ 
-                      width: "100%", 
-                      height: `${buttonHeight}px`, 
-                      borderRadius: `${cardBorderRadius - 4}px`,
-                      fontSize: subtitleFontSize
-                    }}
+                    className="action-button"
                   >
                     View Analytics
                   </Button>
@@ -428,61 +273,33 @@ const Dashboard: React.FC = () => {
 
           {/* Demo Services Preview */}
           <Card 
-            title={<span style={{ 
-              fontSize: subtitleFontSize, 
-              fontWeight: 600 
-            }}>
+            title={<span className="service-card-title">
               Demo Services Preview
             </span>}
             extra={<Button 
               type="primary" 
               onClick={handleStartChat} 
               size={isMobile ? "middle" : "large"}
-              style={{
-                height: `${buttonHeight}px`,
-                fontSize: subtitleFontSize
-              }}
+              className="demo-start-btn"
             >
               Start Chat
             </Button>}
-            style={{ 
-              marginBottom: getResponsiveValue(16, 20, 24), 
-              borderRadius: `${cardBorderRadius}px`,
-              padding: `${cardPadding}px`
-            }}
+            className="demo-services-card"
             hoverable
           >
-            <Row gutter={[getResponsiveValue(12, 14, 16), getResponsiveValue(12, 14, 16)]}>
+            <Row gutter={[16, 16]}>
               <Col xs={24} sm={12} md={8}>
                 <Card 
                   size="small" 
                   bordered={false}
-                  style={{ 
-                    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-                    color: "white",
-                    textAlign: "center",
-                    borderRadius: `${cardBorderRadius}px`,
-                    cursor: "pointer",
-                    padding: `${cardPadding}px`
-                  }}
+                  className="demo-service-item"
                   hoverable
                 >
-                  <RobotOutlined style={{ 
-                    fontSize: getResponsiveValue(20, 24, 32), 
-                    marginBottom: getResponsiveValue(12, 14, 16) 
-                  }} />
-                  <Title level={4} style={{ 
-                    color: "white", 
-                    marginBottom: getResponsiveValue(6, 7, 8),
-                    fontSize: getResponsiveValue(fontSizes.sm, fontSizes.md, fontSizes.lg)
-                  }}>
+                  <RobotOutlined className="demo-service-icon" />
+                  <Title level={4} className="demo-service-title">
                     Customer Support
                   </Title>
-                  <Paragraph style={{ 
-                    color: "rgba(255,255,255,0.9)", 
-                    margin: 0,
-                    fontSize: getResponsiveValue(fontSizes.xs, fontSizes.sm, fontSizes.md)
-                  }}>
+                  <Paragraph className="demo-service-desc">
                     AI-powered customer service bot
                   </Paragraph>
                 </Card>
@@ -492,32 +309,14 @@ const Dashboard: React.FC = () => {
                 <Card 
                   size="small" 
                   bordered={false}
-                  style={{ 
-                    background: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
-                    color: "white",
-                    textAlign: "center",
-                    borderRadius: `${cardBorderRadius}px`,
-                    cursor: "pointer",
-                    padding: `${cardPadding}px`
-                  }}
+                  className="demo-service-item sales"
                   hoverable
                 >
-                  <RobotOutlined style={{ 
-                    fontSize: getResponsiveValue(20, 24, 32), 
-                    marginBottom: getResponsiveValue(12, 14, 16) 
-                  }} />
-                  <Title level={4} style={{ 
-                    color: "white", 
-                    marginBottom: getResponsiveValue(6, 7, 8),
-                    fontSize: getResponsiveValue(fontSizes.sm, fontSizes.md, fontSizes.lg)
-                  }}>
+                  <RobotOutlined className="demo-service-icon" />
+                  <Title level={4} className="demo-service-title">
                     Sales Assistant
                   </Title>
-                  <Paragraph style={{ 
-                    color: "rgba(255,255,255,0.9)", 
-                    margin: 0,
-                    fontSize: getResponsiveValue(fontSizes.xs, fontSizes.sm, fontSizes.md)
-                  }}>
+                  <Paragraph className="demo-service-desc">
                     Lead qualification and sales support
                   </Paragraph>
                 </Card>
@@ -527,50 +326,22 @@ const Dashboard: React.FC = () => {
                 <Card 
                   size="small" 
                   bordered={false}
-                  style={{ 
-                    background: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
-                    color: "white",
-                    textAlign: "center",
-                    borderRadius: `${cardBorderRadius}px`,
-                    cursor: "pointer",
-                    padding: `${cardPadding}px`
-                  }}
+                  className="demo-service-item technical"
                   hoverable
                 >
-                  <RobotOutlined style={{ 
-                    fontSize: getResponsiveValue(20, 24, 32), 
-                    marginBottom: getResponsiveValue(12, 14, 16) 
-                  }} />
-                  <Title level={4} style={{ 
-                    color: "white", 
-                    marginBottom: getResponsiveValue(6, 7, 8),
-                    fontSize: getResponsiveValue(fontSizes.sm, fontSizes.md, fontSizes.lg)
-                  }}>
+                  <RobotOutlined className="demo-service-icon" />
+                  <Title level={4} className="demo-service-title">
                     Technical Support
                   </Title>
-                  <Paragraph style={{ 
-                    color: "rgba(255,255,255,0.9)", 
-                    margin: 0,
-                    fontSize: getResponsiveValue(fontSizes.xs, fontSizes.sm, fontSizes.md)
-                  }}>
+                  <Paragraph className="demo-service-desc">
                     Troubleshooting and technical help
                   </Paragraph>
                 </Card>
               </Col>
             </Row>
             
-            <div style={{ 
-              marginTop: getResponsiveValue(16, 20, 24), 
-              padding: `${cardPadding}px`, 
-              background: "#f8f9fa", 
-              borderRadius: `${cardBorderRadius}px`,
-              textAlign: "center",
-              border: "1px solid #e8e8e8"
-            }}>
-              <Paragraph style={{ 
-                marginBottom: getResponsiveValue(12, 14, 16), 
-                fontSize: getResponsiveValue(fontSizes.sm, fontSizes.md, fontSizes.md) 
-              }}>
+            <div className="demo-info-section">
+              <Paragraph className="demo-description">
                 Experience the power of our AI chat solutions with our interactive demo.
                 Test different scenarios and see how our bots handle various customer inquiries.
               </Paragraph>
@@ -579,11 +350,7 @@ const Dashboard: React.FC = () => {
                 size={isMobile ? "middle" : "large"}
                 icon={<MessageOutlined />}
                 onClick={handleStartChat}
-                style={{ 
-                  borderRadius: `${cardBorderRadius - 4}px`, 
-                  height: `${buttonHeight}px`,
-                  fontSize: subtitleFontSize
-                }}
+                className="demo-start-btn"
               >
                 Start Demo Chat
               </Button>
