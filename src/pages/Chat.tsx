@@ -8,7 +8,7 @@ import {
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useResponsive } from "../hooks/useResponsive";
-import { getResponsiveValue, spacing, fontSizes, componentSizes } from "../utils/responsive";
+import "./Chat.css";
 
 const { Header, Content } = Layout;
 const { Title, Paragraph, Text } = Typography;
@@ -23,7 +23,7 @@ interface Message {
 
 const Chat: React.FC = () => {
   const navigate = useNavigate();
-  const { isMobile, isTablet, screenWidth } = useResponsive();
+  const { isMobile, isTablet } = useResponsive();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
@@ -95,209 +95,69 @@ const Chat: React.FC = () => {
     return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   };
 
-  // Responsive values
-  const headerHeight = getResponsiveValue(56, 60, 64);
-  const headerPadding = getResponsiveValue(12, 14, 16);
-  const contentPadding = getResponsiveValue(12, 14, 16);
-  const chatWindowPadding = getResponsiveValue(12, 14, 16);
-  const inputPadding = getResponsiveValue(12, 14, 16);
-  const avatarSize = getResponsiveValue(32, 36, 40);
-  const messageMaxWidth = getResponsiveValue("95%", "85%", "75%");
-  const titleFontSize = getResponsiveValue(fontSizes.sm, fontSizes.md, fontSizes.lg);
-  const subtitleFontSize = getResponsiveValue(fontSizes.xs, fontSizes.sm, fontSizes.md);
-  const messageFontSize = getResponsiveValue(fontSizes.sm, fontSizes.md, fontSizes.md);
-  const timeFontSize = getResponsiveValue(fontSizes.xs, fontSizes.xs, fontSizes.sm);
-
   return (
-    <Layout style={{ minHeight: "100vh", background: "#f0f2f5" }}>
+    <Layout className="chat-layout">
       {/* Header */}
-      <Header style={{ 
-        background: "#fff", 
-        padding: `0 ${headerPadding}px`, 
-        borderBottom: "1px solid #f0f0f0",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        boxShadow: "0 1px 4px rgba(0,0,0,0.08)",
-        height: `${headerHeight}px`,
-        lineHeight: `${headerHeight}px`,
-        position: "sticky",
-        top: 0,
-        zIndex: 1000
-      }}>
-        <div style={{ 
-          display: "flex", 
-          alignItems: "center", 
-          gap: getResponsiveValue(8, 10, 12),
-          flex: 1,
-          minWidth: 0
-        }}>
+      <Header className="chat-header">
+        <div className="header-left-section">
           <Button 
             type="text" 
             icon={<ArrowLeftOutlined />} 
             onClick={() => navigate("/dashboard")}
-            style={{ 
-              fontSize: getResponsiveValue(14, 15, 16), 
-              height: getResponsiveValue(36, 38, 40),
-              padding: `0 ${getResponsiveValue(8, 10, 12)}px`,
-              flexShrink: 0
-            }}
+            className="back-button"
           >
-            <span style={{ display: isMobile ? "none" : "inline" }}>
+            <span className="back-button-text">
               Back to Dashboard
             </span>
           </Button>
           
-          <Divider type="vertical" style={{ 
-            height: getResponsiveValue(20, 22, 24), 
-            margin: `0 ${getResponsiveValue(6, 7, 8)}px`, 
-            flexShrink: 0 
-          }} />
+          <Divider type="vertical" className="header-divider" />
           
-          <div style={{ 
-            display: "flex", 
-            alignItems: "center", 
-            gap: getResponsiveValue(8, 10, 12),
-            minWidth: 0,
-            flex: 1
-          }}>
-            <RobotOutlined style={{ 
-              fontSize: getResponsiveValue(20, 22, 24), 
-              color: "#1890ff", 
-              flexShrink: 0 
-            }} />
-            <div style={{ minWidth: 0, flex: 1 }}>
-              <Title 
-                level={4} 
-                style={{ 
-                  margin: 0, 
-                  color: "#262626",
-                  fontSize: titleFontSize,
-                  lineHeight: "1.2"
-                }}
-              >
+          <div className="header-title-section">
+            <RobotOutlined className="header-logo" />
+            <div className="header-title-content">
+              <Title level={4} className="header-title">
                 AI Chat Service
               </Title>
-              <Text 
-                type="secondary" 
-                style={{ 
-                  fontSize: subtitleFontSize,
-                  display: isMobile ? "none" : "block"
-                }}
-              >
+              <Text type="secondary" className="header-subtitle">
                 Demo Mode
               </Text>
             </div>
           </div>
         </div>
         
-        <div style={{ 
-          display: "flex", 
-          alignItems: "center", 
-          gap: getResponsiveValue(6, 7, 8),
-          flexShrink: 0
-        }}>
-          <div style={{ 
-            width: 6, 
-            height: 6, 
-            borderRadius: "50%", 
-            background: "#52c41a",
-            marginRight: getResponsiveValue(6, 7, 8)
-          }} />
-          <Text 
-            type="secondary" 
-            style={{ 
-              fontSize: subtitleFontSize,
-              display: isMobile ? "none" : "inline"
-            }}
-          >
+        <div className="header-status">
+          <div className="status-indicator" />
+          <Text type="secondary" className="status-text">
             Online
           </Text>
         </div>
       </Header>
 
       {/* Chat Content */}
-      <Content style={{ 
-        display: "flex", 
-        flexDirection: "column", 
-        height: `calc(100vh - ${headerHeight}px)`,
-        padding: `${contentPadding}px`,
-        background: "transparent"
-      }}>
+      <Content className="chat-content">
         {/* Chat Window */}
-        <div style={{ 
-          flex: 1, 
-          overflowY: "auto", 
-          marginBottom: `${contentPadding}px`,
-          padding: `${chatWindowPadding}px`,
-          background: "#fff",
-          borderRadius: getResponsiveValue(12, 14, 16),
-          border: "1px solid #e8e8e8",
-          boxShadow: "0 2px 8px rgba(0,0,0,0.06)"
-        }}>
+        <div className="chat-window">
           {messages.map((message) => (
             <div
               key={message.id}
-              style={{
-                display: "flex",
-                justifyContent: message.sender === "user" ? "flex-end" : "flex-start",
-                marginBottom: getResponsiveValue(12, 14, 16),
-                width: "100%"
-              }}
+              className={`message-container ${message.sender}`}
             >
-              <div style={{ 
-                display: "flex", 
-                alignItems: "flex-start", 
-                gap: getResponsiveValue(6, 7, 8),
-                maxWidth: messageMaxWidth,
-                flexDirection: message.sender === "user" ? "row-reverse" : "row"
-              }}>
+              <div className={`message-content ${message.sender}`}>
                 <Avatar
                   icon={message.sender === "user" ? <UserOutlined /> : <RobotOutlined />}
-                  style={{
-                    backgroundColor: message.sender === "user" ? "#1890ff" : "#52c41a",
-                    flexShrink: 0,
-                    width: `${avatarSize}px`,
-                    height: `${avatarSize}px`
-                  }}
+                  className={`message-avatar ${message.sender}`}
                 />
-                <div style={{ 
-                  display: "flex", 
-                  flexDirection: "column",
-                  alignItems: message.sender === "user" ? "flex-end" : "flex-start",
-                  maxWidth: `calc(100% - ${avatarSize + 8}px)`,
-                  minWidth: 0
-                }}>
+                <div className={`message-bubble ${message.sender}`}>
                   <Card
                     size="small"
-                    style={{
-                      background: message.sender === "user" ? "#1890ff" : "#f8f9fa",
-                      color: message.sender === "user" ? "white" : "#262626",
-                      borderRadius: getResponsiveValue(16, 18, 20),
-                      border: message.sender === "user" ? "none" : "1px solid #e8e8e8",
-                      boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-                      maxWidth: "100%",
-                      padding: getResponsiveValue(8, 10, 12)
-                    }}
+                    className={`message-card ${message.sender}`}
                   >
-                    <Paragraph style={{ 
-                      margin: 0, 
-                      color: message.sender === "user" ? "white" : "#262626",
-                      wordBreak: "break-word",
-                      fontSize: messageFontSize,
-                      lineHeight: "1.5"
-                    }}>
+                    <Paragraph className={`message-text ${message.sender}`}>
                       {message.text}
                     </Paragraph>
                   </Card>
-                  <Text 
-                    type="secondary" 
-                    style={{ 
-                      fontSize: timeFontSize, 
-                      marginTop: getResponsiveValue(2, 3, 4),
-                      color: message.sender === "user" ? "rgba(255,255,255,0.7)" : "rgba(0,0,0,0.45)"
-                    }}
-                  >
+                  <Text className={`message-time ${message.sender}`}>
                     {formatTime(message.timestamp)}
                   </Text>
                 </div>
@@ -307,51 +167,17 @@ const Chat: React.FC = () => {
           
           {/* AI Typing Animation */}
           {isTyping && (
-            <div style={{ display: "flex", justifyContent: "flex-start", marginBottom: getResponsiveValue(12, 14, 16), width: "100%" }}>
-              <div style={{ display: "flex", alignItems: "flex-start", gap: getResponsiveValue(6, 7, 8) }}>
+            <div className="typing-container">
+              <div className="typing-content">
                 <Avatar
                   icon={<RobotOutlined />}
-                  style={{ 
-                    backgroundColor: "#52c41a", 
-                    flexShrink: 0, 
-                    width: `${avatarSize}px`, 
-                    height: `${avatarSize}px` 
-                  }}
+                  className="message-avatar ai"
                 />
-                <Card
-                  size="small"
-                  style={{
-                    background: "#f8f9fa",
-                    borderRadius: getResponsiveValue(16, 18, 20),
-                    border: "1px solid #e8e8e8",
-                    boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-                    padding: getResponsiveValue(10, 12, 14)
-                  }}
-                >
-                  <div style={{ display: "flex", gap: getResponsiveValue(4, 5, 6) }}>
-                    <div style={{
-                      width: getResponsiveValue(6, 7, 8),
-                      height: getResponsiveValue(6, 7, 8),
-                      borderRadius: "50%",
-                      background: "#1890ff",
-                      animation: "typing 1.4s infinite ease-in-out"
-                    }} />
-                    <div style={{
-                      width: getResponsiveValue(6, 7, 8),
-                      height: getResponsiveValue(6, 7, 8),
-                      borderRadius: "50%",
-                      background: "#1890ff",
-                      animation: "typing 1.4s infinite ease-in-out",
-                      animationDelay: "0.2s"
-                    }} />
-                    <div style={{
-                      width: getResponsiveValue(6, 7, 8),
-                      height: getResponsiveValue(6, 7, 8),
-                      borderRadius: "50%",
-                      background: "#1890ff",
-                      animation: "typing 1.4s infinite ease-in-out",
-                      animationDelay: "0.4s"
-                    }} />
+                <Card size="small" className="typing-card">
+                  <div className="typing-dots">
+                    <div className="typing-dot" />
+                    <div className="typing-dot" />
+                    <div className="typing-dot" />
                   </div>
                 </Card>
               </div>
@@ -362,62 +188,29 @@ const Chat: React.FC = () => {
         </div>
 
         {/* Message Input Area */}
-        <div style={{ 
-          background: "#fff", 
-          padding: `${inputPadding}px`, 
-          borderRadius: getResponsiveValue(12, 14, 16),
-          border: "1px solid #e8e8e8",
-          boxShadow: "0 2px 8px rgba(0,0,0,0.06)"
-        }}>
-          <div style={{ display: "flex", gap: getResponsiveValue(8, 10, 12), alignItems: "flex-end" }}>
+        <div className="input-area">
+          <div className="input-container">
             <TextArea
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder="Type your message here..."
               autoSize={{ minRows: 1, maxRows: 4 }}
-              style={{
-                borderRadius: getResponsiveValue(16, 18, 20),
-                border: "1px solid #d9d9d9",
-                padding: getResponsiveValue(8, 10, 12),
-                resize: "none",
-                fontSize: messageFontSize,
-                lineHeight: "1.5",
-                flex: 1
-              }}
+              className="message-input"
             />
             <Button
               type="primary"
               icon={<SendOutlined />}
               onClick={handleSendMessage}
               disabled={!inputValue.trim()}
-              style={{
-                borderRadius: "50%",
-                width: getResponsiveValue(36, 40, 44),
-                height: getResponsiveValue(36, 40, 44),
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                flexShrink: 0
-              }}
+              className="send-button"
             />
           </div>
-          <div style={{ 
-            marginTop: getResponsiveValue(6, 7, 8), 
-            display: "flex", 
-            justifyContent: "space-between", 
-            alignItems: "center"
-          }}>
-            <Text 
-              type="secondary" 
-              style={{ 
-                fontSize: timeFontSize,
-                display: isMobile ? "none" : "inline"
-              }}
-            >
+          <div className="input-footer">
+            <Text type="secondary" className="input-hint">
               Press Enter to send, Shift+Enter for new line
             </Text>
-            <Text type="secondary" style={{ fontSize: timeFontSize }}>
+            <Text type="secondary" className="message-count">
               {messages.length} messages
             </Text>
           </div>
