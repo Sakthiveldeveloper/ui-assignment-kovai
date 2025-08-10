@@ -7,6 +7,8 @@ import {
   SendOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import { useResponsive } from "../hooks/useResponsive";
+import { getResponsiveValue, spacing, fontSizes, componentSizes } from "../utils/responsive";
 
 const { Header, Content } = Layout;
 const { Title, Paragraph, Text } = Typography;
@@ -21,6 +23,7 @@ interface Message {
 
 const Chat: React.FC = () => {
   const navigate = useNavigate();
+  const { isMobile, isTablet, screenWidth } = useResponsive();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
@@ -92,49 +95,124 @@ const Chat: React.FC = () => {
     return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   };
 
+  // Responsive values
+  const headerHeight = getResponsiveValue(56, 60, 64);
+  const headerPadding = getResponsiveValue(12, 14, 16);
+  const contentPadding = getResponsiveValue(12, 14, 16);
+  const chatWindowPadding = getResponsiveValue(12, 14, 16);
+  const inputPadding = getResponsiveValue(12, 14, 16);
+  const avatarSize = getResponsiveValue(32, 36, 40);
+  const messageMaxWidth = getResponsiveValue("95%", "85%", "75%");
+  const titleFontSize = getResponsiveValue(fontSizes.sm, fontSizes.md, fontSizes.lg);
+  const subtitleFontSize = getResponsiveValue(fontSizes.xs, fontSizes.sm, fontSizes.md);
+  const messageFontSize = getResponsiveValue(fontSizes.sm, fontSizes.md, fontSizes.md);
+  const timeFontSize = getResponsiveValue(fontSizes.xs, fontSizes.xs, fontSizes.sm);
+
   return (
     <Layout style={{ minHeight: "100vh", background: "#f0f2f5" }}>
       {/* Header */}
       <Header style={{ 
         background: "#fff", 
-        padding: "0 24px", 
+        padding: `0 ${headerPadding}px`, 
         borderBottom: "1px solid #f0f0f0",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
         boxShadow: "0 1px 4px rgba(0,0,0,0.08)",
-        height: "64px",
-        lineHeight: "64px"
+        height: `${headerHeight}px`,
+        lineHeight: `${headerHeight}px`,
+        position: "sticky",
+        top: 0,
+        zIndex: 1000
       }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+        <div style={{ 
+          display: "flex", 
+          alignItems: "center", 
+          gap: getResponsiveValue(8, 10, 12),
+          flex: 1,
+          minWidth: 0
+        }}>
           <Button 
             type="text" 
             icon={<ArrowLeftOutlined />} 
             onClick={() => navigate("/dashboard")}
-            style={{ fontSize: 16, height: "40px" }}
+            style={{ 
+              fontSize: getResponsiveValue(14, 15, 16), 
+              height: getResponsiveValue(36, 38, 40),
+              padding: `0 ${getResponsiveValue(8, 10, 12)}px`,
+              flexShrink: 0
+            }}
           >
-            Back to Dashboard
+            <span style={{ display: isMobile ? "none" : "inline" }}>
+              Back to Dashboard
+            </span>
           </Button>
-          <Divider type="vertical" style={{ height: "24px", margin: "0 8px" }} />
-          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <RobotOutlined style={{ fontSize: 24, color: "#1890ff" }} />
-            <div>
-              <Title level={4} style={{ margin: 0, color: "#262626" }}>
+          
+          <Divider type="vertical" style={{ 
+            height: getResponsiveValue(20, 22, 24), 
+            margin: `0 ${getResponsiveValue(6, 7, 8)}px`, 
+            flexShrink: 0 
+          }} />
+          
+          <div style={{ 
+            display: "flex", 
+            alignItems: "center", 
+            gap: getResponsiveValue(8, 10, 12),
+            minWidth: 0,
+            flex: 1
+          }}>
+            <RobotOutlined style={{ 
+              fontSize: getResponsiveValue(20, 22, 24), 
+              color: "#1890ff", 
+              flexShrink: 0 
+            }} />
+            <div style={{ minWidth: 0, flex: 1 }}>
+              <Title 
+                level={4} 
+                style={{ 
+                  margin: 0, 
+                  color: "#262626",
+                  fontSize: titleFontSize,
+                  lineHeight: "1.2"
+                }}
+              >
                 AI Chat Service
               </Title>
-              <Text type="secondary" style={{ fontSize: "12px" }}>Demo Mode</Text>
+              <Text 
+                type="secondary" 
+                style={{ 
+                  fontSize: subtitleFontSize,
+                  display: isMobile ? "none" : "block"
+                }}
+              >
+                Demo Mode
+              </Text>
             </div>
           </div>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+        
+        <div style={{ 
+          display: "flex", 
+          alignItems: "center", 
+          gap: getResponsiveValue(6, 7, 8),
+          flexShrink: 0
+        }}>
           <div style={{ 
-            width: 8, 
-            height: 8, 
+            width: 6, 
+            height: 6, 
             borderRadius: "50%", 
             background: "#52c41a",
-            marginRight: 8
+            marginRight: getResponsiveValue(6, 7, 8)
           }} />
-          <Text type="secondary" style={{ fontSize: "12px" }}>Online</Text>
+          <Text 
+            type="secondary" 
+            style={{ 
+              fontSize: subtitleFontSize,
+              display: isMobile ? "none" : "inline"
+            }}
+          >
+            Online
+          </Text>
         </div>
       </Header>
 
@@ -142,18 +220,18 @@ const Chat: React.FC = () => {
       <Content style={{ 
         display: "flex", 
         flexDirection: "column", 
-        height: "calc(100vh - 64px)",
-        padding: "24px",
+        height: `calc(100vh - ${headerHeight}px)`,
+        padding: `${contentPadding}px`,
         background: "transparent"
       }}>
         {/* Chat Window */}
         <div style={{ 
           flex: 1, 
           overflowY: "auto", 
-          marginBottom: "24px",
-          padding: "20px",
+          marginBottom: `${contentPadding}px`,
+          padding: `${chatWindowPadding}px`,
           background: "#fff",
-          borderRadius: "16px",
+          borderRadius: getResponsiveValue(12, 14, 16),
           border: "1px solid #e8e8e8",
           boxShadow: "0 2px 8px rgba(0,0,0,0.06)"
         }}>
@@ -163,15 +241,15 @@ const Chat: React.FC = () => {
               style={{
                 display: "flex",
                 justifyContent: message.sender === "user" ? "flex-end" : "flex-start",
-                marginBottom: "20px",
+                marginBottom: getResponsiveValue(12, 14, 16),
                 width: "100%"
               }}
             >
               <div style={{ 
                 display: "flex", 
                 alignItems: "flex-start", 
-                gap: "12px",
-                maxWidth: "75%",
+                gap: getResponsiveValue(6, 7, 8),
+                maxWidth: messageMaxWidth,
                 flexDirection: message.sender === "user" ? "row-reverse" : "row"
               }}>
                 <Avatar
@@ -179,33 +257,34 @@ const Chat: React.FC = () => {
                   style={{
                     backgroundColor: message.sender === "user" ? "#1890ff" : "#52c41a",
                     flexShrink: 0,
-                    width: "36px",
-                    height: "36px"
+                    width: `${avatarSize}px`,
+                    height: `${avatarSize}px`
                   }}
                 />
                 <div style={{ 
                   display: "flex", 
                   flexDirection: "column",
                   alignItems: message.sender === "user" ? "flex-end" : "flex-start",
-                  maxWidth: "calc(100% - 48px)"
+                  maxWidth: `calc(100% - ${avatarSize + 8}px)`,
+                  minWidth: 0
                 }}>
                   <Card
                     size="small"
                     style={{
                       background: message.sender === "user" ? "#1890ff" : "#f8f9fa",
                       color: message.sender === "user" ? "white" : "#262626",
-                      borderRadius: "18px",
+                      borderRadius: getResponsiveValue(16, 18, 20),
                       border: message.sender === "user" ? "none" : "1px solid #e8e8e8",
                       boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
                       maxWidth: "100%",
-                      padding: "12px 16px"
+                      padding: getResponsiveValue(8, 10, 12)
                     }}
                   >
                     <Paragraph style={{ 
                       margin: 0, 
                       color: message.sender === "user" ? "white" : "#262626",
                       wordBreak: "break-word",
-                      fontSize: "14px",
+                      fontSize: messageFontSize,
                       lineHeight: "1.5"
                     }}>
                       {message.text}
@@ -214,8 +293,8 @@ const Chat: React.FC = () => {
                   <Text 
                     type="secondary" 
                     style={{ 
-                      fontSize: "11px", 
-                      marginTop: "6px",
+                      fontSize: timeFontSize, 
+                      marginTop: getResponsiveValue(2, 3, 4),
                       color: message.sender === "user" ? "rgba(255,255,255,0.7)" : "rgba(0,0,0,0.45)"
                     }}
                   >
@@ -228,41 +307,46 @@ const Chat: React.FC = () => {
           
           {/* AI Typing Animation */}
           {isTyping && (
-            <div style={{ display: "flex", justifyContent: "flex-start", marginBottom: "20px", width: "100%" }}>
-              <div style={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
+            <div style={{ display: "flex", justifyContent: "flex-start", marginBottom: getResponsiveValue(12, 14, 16), width: "100%" }}>
+              <div style={{ display: "flex", alignItems: "flex-start", gap: getResponsiveValue(6, 7, 8) }}>
                 <Avatar
                   icon={<RobotOutlined />}
-                  style={{ backgroundColor: "#52c41a", flexShrink: 0, width: "36px", height: "36px" }}
+                  style={{ 
+                    backgroundColor: "#52c41a", 
+                    flexShrink: 0, 
+                    width: `${avatarSize}px`, 
+                    height: `${avatarSize}px` 
+                  }}
                 />
                 <Card
                   size="small"
                   style={{
                     background: "#f8f9fa",
-                    borderRadius: "18px",
+                    borderRadius: getResponsiveValue(16, 18, 20),
                     border: "1px solid #e8e8e8",
                     boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-                    padding: "16px 20px"
+                    padding: getResponsiveValue(10, 12, 14)
                   }}
                 >
-                  <div style={{ display: "flex", gap: "6px" }}>
+                  <div style={{ display: "flex", gap: getResponsiveValue(4, 5, 6) }}>
                     <div style={{
-                      width: "8px",
-                      height: "8px",
+                      width: getResponsiveValue(6, 7, 8),
+                      height: getResponsiveValue(6, 7, 8),
                       borderRadius: "50%",
                       background: "#1890ff",
                       animation: "typing 1.4s infinite ease-in-out"
                     }} />
                     <div style={{
-                      width: "8px",
-                      height: "8px",
+                      width: getResponsiveValue(6, 7, 8),
+                      height: getResponsiveValue(6, 7, 8),
                       borderRadius: "50%",
                       background: "#1890ff",
                       animation: "typing 1.4s infinite ease-in-out",
                       animationDelay: "0.2s"
                     }} />
                     <div style={{
-                      width: "8px",
-                      height: "8px",
+                      width: getResponsiveValue(6, 7, 8),
+                      height: getResponsiveValue(6, 7, 8),
                       borderRadius: "50%",
                       background: "#1890ff",
                       animation: "typing 1.4s infinite ease-in-out",
@@ -280,12 +364,12 @@ const Chat: React.FC = () => {
         {/* Message Input Area */}
         <div style={{ 
           background: "#fff", 
-          padding: "20px", 
-          borderRadius: "16px",
+          padding: `${inputPadding}px`, 
+          borderRadius: getResponsiveValue(12, 14, 16),
           border: "1px solid #e8e8e8",
           boxShadow: "0 2px 8px rgba(0,0,0,0.06)"
         }}>
-          <div style={{ display: "flex", gap: "16px", alignItems: "flex-end" }}>
+          <div style={{ display: "flex", gap: getResponsiveValue(8, 10, 12), alignItems: "flex-end" }}>
             <TextArea
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
@@ -293,12 +377,13 @@ const Chat: React.FC = () => {
               placeholder="Type your message here..."
               autoSize={{ minRows: 1, maxRows: 4 }}
               style={{
-                borderRadius: "20px",
+                borderRadius: getResponsiveValue(16, 18, 20),
                 border: "1px solid #d9d9d9",
-                padding: "12px 20px",
+                padding: getResponsiveValue(8, 10, 12),
                 resize: "none",
-                fontSize: "14px",
-                lineHeight: "1.5"
+                fontSize: messageFontSize,
+                lineHeight: "1.5",
+                flex: 1
               }}
             />
             <Button
@@ -308,8 +393,8 @@ const Chat: React.FC = () => {
               disabled={!inputValue.trim()}
               style={{
                 borderRadius: "50%",
-                width: "44px",
-                height: "44px",
+                width: getResponsiveValue(36, 40, 44),
+                height: getResponsiveValue(36, 40, 44),
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -318,15 +403,21 @@ const Chat: React.FC = () => {
             />
           </div>
           <div style={{ 
-            marginTop: "12px", 
+            marginTop: getResponsiveValue(6, 7, 8), 
             display: "flex", 
             justifyContent: "space-between", 
             alignItems: "center"
           }}>
-            <Text type="secondary" style={{ fontSize: "12px" }}>
+            <Text 
+              type="secondary" 
+              style={{ 
+                fontSize: timeFontSize,
+                display: isMobile ? "none" : "inline"
+              }}
+            >
               Press Enter to send, Shift+Enter for new line
             </Text>
-            <Text type="secondary" style={{ fontSize: "12px" }}>
+            <Text type="secondary" style={{ fontSize: timeFontSize }}>
               {messages.length} messages
             </Text>
           </div>

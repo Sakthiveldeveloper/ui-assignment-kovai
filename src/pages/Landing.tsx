@@ -1,430 +1,797 @@
 import React from "react";
-import { Layout, Typography, Button, Row, Col, Card, Divider, Space, Avatar } from "antd";
+import { Typography, Button, Space, Avatar, Card, Row, Col } from "antd";
 import {
   RobotOutlined,
   MessageOutlined,
   GlobalOutlined,
   ApiOutlined,
-  ClockCircleOutlined,
   CheckCircleOutlined,
-  StarOutlined,
-  GithubOutlined,
+  UserOutlined,
+  PhoneOutlined,
+  MailOutlined,
   LinkedinOutlined,
   TwitterOutlined,
-  MailOutlined,
-  PhoneOutlined,
+  GithubOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import { useResponsive } from "../hooks/useResponsive";
+import { getResponsiveValue, spacing, fontSizes, componentSizes } from "../utils/responsive";
 
-const { Header, Content, Footer } = Layout;
 const { Title, Paragraph, Text } = Typography;
 
-const LandingPage: React.FC = () => {
+const Landing: React.FC = () => {
   const navigate = useNavigate();
+  const { isMobile, isTablet, screenWidth } = useResponsive();
 
   const handleGetStarted = () => {
     navigate("/dashboard");
   };
 
+  // Responsive values
+  const heroPadding = getResponsiveValue(40, 60, 100);
+  const sectionPadding = getResponsiveValue(40, 60, 100);
+  const contentMaxWidth = getResponsiveValue(1000, 1100, 1200);
+  const heroTitleFontSize = getResponsiveValue(fontSizes.xxl, fontSizes.display, fontSizes.hero);
+  const sectionTitleFontSize = getResponsiveValue(fontSizes.xl, fontSizes.xxl, fontSizes.display);
+  const heroSubtitleFontSize = getResponsiveValue(fontSizes.md, fontSizes.lg, fontSizes.xl);
+  const sectionSubtitleFontSize = getResponsiveValue(fontSizes.md, fontSizes.lg, fontSizes.xl);
+  const bodyFontSize = getResponsiveValue(fontSizes.md, fontSizes.lg, fontSizes.lg);
+  const buttonHeight = getResponsiveValue(44, 48, 56);
+  const buttonFontSize = getResponsiveValue(fontSizes.md, fontSizes.lg, fontSizes.xl);
+  const buttonPadding = getResponsiveValue(24, 28, 40);
+  const avatarSize = getResponsiveValue(56, 64, 80);
+  const cardPadding = getResponsiveValue(20, 24, 32);
+  const cardBorderRadius = getResponsiveValue(12, 14, 16);
+  const gridGutter = getResponsiveValue(20, 24, 32);
+
   return (
-    <Layout style={{ minHeight: "100vh" }}>
-      {/* Header */}
-      <Header
-        style={{
-          background: "#fff",
-          padding: "0 50px",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          borderBottom: "1px solid #f0f0f0",
-          position: "sticky",
-          top: 0,
-          zIndex: 1000,
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <RobotOutlined style={{ fontSize: 32, color: "#1890ff", marginRight: 12 }} />
-          <Title level={3} style={{ margin: 0, color: "#1890ff" }}>
-            AI Chat Pro
-          </Title>
-        </div>
-        <div>
-          <Button type="text" style={{ marginRight: 16 }}>
-            Features
-          </Button>
-          <Button type="text" style={{ marginRight: 16 }}>
-            About
-          </Button>
-          <Button type="text" style={{ marginRight: 16 }}>
-            Pricing
-          </Button>
-          <Button type="primary" onClick={handleGetStarted}>
-            Get Started
-          </Button>
-        </div>
-      </Header>
-
+    <div style={{ minHeight: "100vh", background: "#f0f2f5" }}>
       {/* Hero Section */}
-      <Content style={{ padding: "80px 50px 50px" }}>
-        <Row gutter={[40, 40]} align="middle" style={{ marginBottom: 80 }}>
-          <Col xs={24} md={12}>
-            <Title level={1} style={{ fontSize: "3.5rem", lineHeight: 1.2 }}>
-              Transform Your Business with{" "}
-              <span style={{ color: "#1890ff" }}>AI Chat</span>
-            </Title>
-            <Paragraph style={{ fontSize: 20, color: "#555", marginBottom: 32 }}>
-              Empower your business with intelligent, 24/7 AI chat support. 
-              Multilingual, scalable, and always ready to help your customers.
-            </Paragraph>
-            <Space size="large">
-              <Button type="primary" size="large" onClick={handleGetStarted}>
-                Get Started
-              </Button>
-              <Button size="large">Watch Demo</Button>
-            </Space>
-          </Col>
-          <Col xs={24} md={12}>
-            <div style={{ 
-              background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-              borderRadius: 20,
-              padding: 40,
-              textAlign: "center",
-              color: "white"
-            }}>
-              <RobotOutlined style={{ fontSize: 120, marginBottom: 20 }} />
-              <Title level={2} style={{ color: "white", marginBottom: 16 }}>
-                AI-Powered Conversations
-              </Title>
-              <Paragraph style={{ color: "rgba(255,255,255,0.9)", fontSize: 16 }}>
-                Natural language processing that understands and responds like a human
-              </Paragraph>
-            </div>
-          </Col>
-        </Row>
+      <section style={{
+        background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+        color: "white",
+        padding: `${heroPadding}px ${getResponsiveValue(16, 20, 40)}px`,
+        textAlign: "center",
+        position: "relative",
+        overflow: "hidden"
+      }}>
+        <div style={{ position: "relative", zIndex: 2, maxWidth: `${contentMaxWidth}px`, margin: "0 auto" }}>
+          <Title 
+            level={1} 
+            style={{ 
+              color: "white", 
+              marginBottom: getResponsiveValue(16, 20, 24),
+              fontSize: heroTitleFontSize,
+              lineHeight: "1.2"
+            }}
+          >
+            Transform Your Business with
+            <br />
+            <span style={{ color: "#ffd700" }}>AI-Powered Chat</span>
+          </Title>
+          
+          <Paragraph style={{
+            fontSize: heroSubtitleFontSize,
+            marginBottom: getResponsiveValue(24, 32, 40),
+            maxWidth: "600px",
+            margin: `0 auto ${getResponsiveValue(24, 32, 40)}px`,
+            opacity: 0.9,
+            lineHeight: "1.6"
+          }}>
+            Experience the future of customer service with our intelligent AI chat solutions. 
+            Provide 24/7 support, multilingual assistance, and seamless integration.
+          </Paragraph>
+          
+          <Space size="large" wrap style={{ justifyContent: "center" }}>
+            <Button 
+              type="primary" 
+              size="large"
+              onClick={handleGetStarted}
+              style={{
+                height: `${buttonHeight}px`,
+                fontSize: buttonFontSize,
+                padding: `0 ${buttonPadding}px`,
+                borderRadius: "8px",
+                background: "#ffd700",
+                border: "none",
+                color: "#333"
+              }}
+            >
+              Get Started
+            </Button>
+            <Button 
+              size="large"
+              style={{
+                height: `${buttonHeight}px`,
+                fontSize: buttonFontSize,
+                padding: `0 ${buttonPadding}px`,
+                borderRadius: "8px",
+                border: "2px solid white",
+                color: "white",
+                background: "transparent"
+              }}
+            >
+              Watch Demo
+            </Button>
+          </Space>
+        </div>
+        
+        {/* Floating Elements */}
+        <div style={{
+          position: "absolute",
+          top: "20%",
+          left: "10%",
+          opacity: 0.1,
+          animation: "float 6s ease-in-out infinite"
+        }}>
+          <RobotOutlined style={{ fontSize: getResponsiveValue(40, 50, 60) }} />
+        </div>
+        <div style={{
+          position: "absolute",
+          bottom: "20%",
+          right: "10%",
+          opacity: 0.1,
+          animation: "float 6s ease-in-out infinite reverse"
+        }}>
+          <MessageOutlined style={{ fontSize: getResponsiveValue(40, 50, 60) }} />
+        </div>
+      </section>
 
-        {/* About Section */}
-        <div style={{ marginBottom: 80 }}>
-          <Row gutter={[40, 40]} align="middle">
-            <Col xs={24} md={12}>
-              <Title level={2}>Who We Are</Title>
-              <Paragraph style={{ fontSize: 16, color: "#555", marginBottom: 24 }}>
-                We are pioneers in AI-powered customer service solutions, dedicated to helping 
-                businesses provide exceptional customer experiences through intelligent automation.
-              </Paragraph>
-              <Title level={4}>Our Mission</Title>
-              <Paragraph style={{ fontSize: 16, color: "#555", marginBottom: 24 }}>
-                To democratize AI technology and make advanced customer service accessible 
-                to businesses of all sizes, enabling them to compete with industry giants.
-              </Paragraph>
-              <Title level={4}>How AI Chat Helps Businesses</Title>
-              <Paragraph style={{ fontSize: 16, color: "#555" }}>
-                Our AI chat solutions reduce response times, increase customer satisfaction, 
-                and provide 24/7 support while significantly cutting operational costs.
-              </Paragraph>
+      {/* About Section */}
+      <section style={{
+        padding: `${sectionPadding}px ${getResponsiveValue(16, 20, 40)}px`,
+        background: "white"
+      }}>
+        <div style={{ maxWidth: `${contentMaxWidth}px`, margin: "0 auto", textAlign: "center" }}>
+          <Title 
+            level={2} 
+            style={{ 
+              marginBottom: getResponsiveValue(16, 20, 24),
+              fontSize: sectionTitleFontSize
+            }}
+          >
+            Who We Are
+          </Title>
+          
+          <Paragraph style={{
+            fontSize: bodyFontSize,
+            maxWidth: "800px",
+            margin: `0 auto ${getResponsiveValue(40, 50, 60)}px`,
+            lineHeight: "1.6",
+            color: "#666"
+          }}>
+            We are pioneers in AI-powered customer service solutions, dedicated to helping businesses 
+            deliver exceptional customer experiences through intelligent automation and human-like interactions.
+          </Paragraph>
+          
+          <Row gutter={[gridGutter, gridGutter]} justify="center">
+            <Col xs={24} sm={12} md={8}>
+              <div style={{ textAlign: "center", padding: `${getResponsiveValue(20, 24, 32)}px ${getResponsiveValue(16, 18, 20)}px` }}>
+                <Avatar 
+                  size={avatarSize} 
+                  icon={<RobotOutlined />} 
+                  style={{ 
+                    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                    marginBottom: getResponsiveValue(16, 20, 24)
+                  }}
+                />
+                <Title level={4} style={{ 
+                  marginBottom: getResponsiveValue(12, 14, 16),
+                  fontSize: getResponsiveValue(fontSizes.lg, fontSizes.xl, fontSizes.xxl)
+                }}>
+                  Our Mission
+                </Title>
+                <Paragraph style={{ 
+                  color: "#666", 
+                  lineHeight: "1.6",
+                  fontSize: bodyFontSize
+                }}>
+                  To democratize AI technology and make intelligent customer service accessible to businesses of all sizes.
+                </Paragraph>
+              </div>
             </Col>
-            <Col xs={24} md={12}>
-              <div style={{ 
-                background: "#f8f9fa",
-                borderRadius: 16,
-                padding: 40,
-                textAlign: "center"
-              }}>
-                <div style={{ fontSize: 48, marginBottom: 16 }}>🚀</div>
-                <Title level={3}>Trusted by 10,000+ Companies</Title>
-                <div style={{ display: "flex", justifyContent: "center", gap: 20, marginTop: 20 }}>
-                  <Avatar size={64} style={{ backgroundColor: "#1890ff" }}>A</Avatar>
-                  <Avatar size={64} style={{ backgroundColor: "#52c41a" }}>B</Avatar>
-                  <Avatar size={64} style={{ backgroundColor: "#faad14" }}>C</Avatar>
-                  <Avatar size={64} style={{ backgroundColor: "#f5222d" }}>D</Avatar>
-                </div>
+            
+            <Col xs={24} sm={12} md={8}>
+              <div style={{ textAlign: "center", padding: `${getResponsiveValue(20, 24, 32)}px ${getResponsiveValue(16, 18, 20)}px` }}>
+                <Avatar 
+                  size={avatarSize} 
+                  icon={<MessageOutlined />} 
+                  style={{ 
+                    background: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+                    marginBottom: getResponsiveValue(16, 20, 24)
+                  }}
+                />
+                <Title level={4} style={{ 
+                  marginBottom: getResponsiveValue(12, 14, 16),
+                  fontSize: getResponsiveValue(fontSizes.lg, fontSizes.xl, fontSizes.xxl)
+                }}>
+                  How AI Chat Helps
+                </Title>
+                <Paragraph style={{ 
+                  color: "#666", 
+                  lineHeight: "1.6",
+                  fontSize: bodyFontSize
+                }}>
+                  Automate responses, reduce wait times, and provide consistent support across multiple languages and time zones.
+                </Paragraph>
+              </div>
+            </Col>
+            
+            <Col xs={24} sm={12} md={8}>
+              <div style={{ textAlign: "center", padding: `${getResponsiveValue(20, 24, 32)}px ${getResponsiveValue(16, 18, 20)}px` }}>
+                <Avatar 
+                  size={avatarSize} 
+                  icon={<GlobalOutlined />} 
+                  style={{ 
+                    background: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+                    marginBottom: getResponsiveValue(16, 20, 24)
+                  }}
+                />
+                <Title level={4} style={{ 
+                  marginBottom: getResponsiveValue(12, 14, 16),
+                  fontSize: getResponsiveValue(fontSizes.lg, fontSizes.xl, fontSizes.xxl)
+                }}>
+                  Global Reach
+                </Title>
+                <Paragraph style={{ 
+                  color: "#666", 
+                  lineHeight: "1.6",
+                  fontSize: bodyFontSize
+                }}>
+                  Serve customers worldwide with multilingual support and localized responses for better engagement.
+                </Paragraph>
               </div>
             </Col>
           </Row>
         </div>
+      </section>
 
-        {/* Features Section */}
-        <div style={{ marginBottom: 80 }}>
-          <Title level={2} style={{ textAlign: "center", marginBottom: 16 }}>
-            Key Benefits
-          </Title>
-          <Paragraph style={{ textAlign: "center", maxWidth: 600, margin: "0 auto 40px", fontSize: 16 }}>
-            Discover why leading businesses choose our AI chat solutions
-          </Paragraph>
-          <Row gutter={[24, 24]}>
-            <Col xs={24} md={8}>
-              <Card 
-                bordered={false} 
-                style={{ textAlign: "center", height: "100%", borderRadius: 16 }}
-                hoverable
-              >
-                <ClockCircleOutlined style={{ fontSize: 48, color: "#1890ff", marginBottom: 16 }} />
-                <Title level={4}>24/7 Chat Support</Title>
-                <Paragraph>
-                  Never miss a customer inquiry. Our AI provides instant responses 
-                  around the clock, ensuring your business is always available.
-                </Paragraph>
-              </Card>
-            </Col>
-            <Col xs={24} md={8}>
-              <Card 
-                bordered={false} 
-                style={{ textAlign: "center", height: "100%", borderRadius: 16 }}
-                hoverable
-              >
-                <GlobalOutlined style={{ fontSize: 48, color: "#52c41a", marginBottom: 16 }} />
-                <Title level={4}>Multilingual AI</Title>
-                <Paragraph>
-                  Break language barriers with AI that speaks 50+ languages. 
-                  Serve customers worldwide in their native language.
-                </Paragraph>
-              </Card>
-            </Col>
-            <Col xs={24} md={8}>
-              <Card 
-                bordered={false} 
-                style={{ textAlign: "center", height: "100%", borderRadius: 16 }}
-                hoverable
-              >
-                <ApiOutlined style={{ fontSize: 48, color: "#faad14", marginBottom: 16 }} />
-                <Title level={4}>API Access</Title>
-                <Paragraph>
-                  Integrate seamlessly with your existing systems through our 
-                  powerful REST API and webhook support.
-                </Paragraph>
-              </Card>
-            </Col>
-          </Row>
+      {/* Features Section */}
+      <section style={{
+        padding: `${sectionPadding}px ${getResponsiveValue(16, 20, 40)}px`,
+        background: "#f8f9fa"
+      }}>
+        <div style={{ maxWidth: `${contentMaxWidth}px`, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: getResponsiveValue(40, 50, 60) }}>
+            <Title 
+              level={2} 
+              style={{ 
+                marginBottom: getResponsiveValue(16, 20, 24),
+                fontSize: sectionTitleFontSize
+              }}
+            >
+              Key Benefits
+            </Title>
+            <Paragraph style={{
+              fontSize: bodyFontSize,
+              maxWidth: "600px",
+              margin: "0 auto",
+              lineHeight: "1.6",
+              color: "#666"
+            }}>
+              Discover why leading businesses choose our AI chat solutions
+            </Paragraph>
+          </div>
           
-          <Row gutter={[24, 24]} style={{ marginTop: 24 }}>
-            <Col xs={24} md={8}>
+          <Row gutter={[gridGutter, gridGutter]}>
+            <Col xs={24} sm={12} lg={8}>
               <Card 
-                bordered={false} 
-                style={{ textAlign: "center", height: "100%", borderRadius: 16 }}
-                hoverable
+                hoverable 
+                style={{ 
+                  height: "100%", 
+                  borderRadius: `${cardBorderRadius}px`,
+                  textAlign: "center",
+                  border: "none",
+                  boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
+                  padding: `${cardPadding}px`
+                }}
               >
-                <MessageOutlined style={{ fontSize: 48, color: "#722ed1", marginBottom: 16 }} />
-                <Title level={4}>Smart Conversations</Title>
-                <Paragraph>
-                  Advanced NLP that understands context and provides 
-                  human-like, intelligent responses to complex queries.
+                <Avatar 
+                  size={getResponsiveValue(48, 56, 64)} 
+                  icon={<MessageOutlined />} 
+                  style={{ 
+                    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                    marginBottom: getResponsiveValue(16, 20, 24)
+                  }}
+                />
+                <Title level={4} style={{ 
+                  marginBottom: getResponsiveValue(12, 14, 16),
+                  fontSize: getResponsiveValue(fontSizes.lg, fontSizes.xl, fontSizes.xxl)
+                }}>
+                  24/7 Chat Support
+                </Title>
+                <Paragraph style={{ 
+                  color: "#666", 
+                  lineHeight: "1.6",
+                  fontSize: bodyFontSize
+                }}>
+                  Provide round-the-clock customer support without increasing your team size. 
+                  Our AI handles inquiries instantly, any time of day.
                 </Paragraph>
               </Card>
             </Col>
-            <Col xs={24} md={8}>
+            
+            <Col xs={24} sm={12} lg={8}>
               <Card 
-                bordered={false} 
-                style={{ textAlign: "center", height: "100%", borderRadius: 16 }}
-                hoverable
+                hoverable 
+                style={{ 
+                  height: "100%", 
+                  borderRadius: `${cardBorderRadius}px`,
+                  textAlign: "center",
+                  border: "none",
+                  boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
+                  padding: `${cardPadding}px`
+                }}
               >
-                <CheckCircleOutlined style={{ fontSize: 48, color: "#13c2c2", marginBottom: 16 }} />
-                <Title level={4}>Easy Integration</Title>
-                <Paragraph>
-                  Simple setup process with pre-built templates and 
-                  comprehensive documentation for quick deployment.
+                <Avatar 
+                  size={getResponsiveValue(48, 56, 64)} 
+                  icon={<GlobalOutlined />} 
+                  style={{ 
+                    background: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+                    marginBottom: getResponsiveValue(16, 20, 24)
+                  }}
+                />
+                <Title level={4} style={{ 
+                  marginBottom: getResponsiveValue(12, 14, 16),
+                  fontSize: getResponsiveValue(fontSizes.lg, fontSizes.xl, fontSizes.xxl)
+                }}>
+                  Multilingual AI
+                </Title>
+                <Paragraph style={{ 
+                  color: "#666", 
+                  lineHeight: "1.6",
+                  fontSize: bodyFontSize
+                }}>
+                  Break language barriers with AI that understands and responds in multiple languages. 
+                  Serve global customers with localized experiences.
                 </Paragraph>
               </Card>
             </Col>
-            <Col xs={24} md={8}>
+            
+            <Col xs={24} sm={12} lg={8}>
               <Card 
-                bordered={false} 
-                style={{ textAlign: "center", height: "100%", borderRadius: 16 }}
-                hoverable
+                hoverable 
+                style={{ 
+                  height: "100%", 
+                  borderRadius: `${cardBorderRadius}px`,
+                  textAlign: "center",
+                  border: "none",
+                  boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
+                  padding: `${cardPadding}px`
+                }}
               >
-                <StarOutlined style={{ fontSize: 48, color: "#eb2f96", marginBottom: 16 }} />
-                <Title level={4}>Analytics & Insights</Title>
-                <Paragraph>
-                  Detailed analytics and performance metrics to optimize 
-                  your customer service and track AI effectiveness.
+                <Avatar 
+                  size={getResponsiveValue(48, 56, 64)} 
+                  icon={<ApiOutlined />} 
+                  style={{ 
+                    background: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+                    marginBottom: getResponsiveValue(16, 20, 24)
+                  }}
+                />
+                <Title level={4} style={{ 
+                  marginBottom: getResponsiveValue(12, 14, 16),
+                  fontSize: getResponsiveValue(fontSizes.lg, fontSizes.xl, fontSizes.xxl)
+                }}>
+                  API Access
+                </Title>
+                <Paragraph style={{ 
+                  color: "#666", 
+                  lineHeight: "1.6",
+                  fontSize: bodyFontSize
+                }}>
+                  Integrate our AI chat seamlessly into your existing systems with our robust API. 
+                  Customize and extend functionality as needed.
                 </Paragraph>
               </Card>
             </Col>
           </Row>
         </div>
+      </section>
 
-        {/* Pricing Section */}
-        <div style={{ marginBottom: 80 }}>
-          <Title level={2} style={{ textAlign: "center", marginBottom: 16 }}>
-            Choose Your Plan
-          </Title>
-          <Paragraph style={{ textAlign: "center", maxWidth: 600, margin: "0 auto 40px", fontSize: 16 }}>
-            Start free and scale as you grow
-          </Paragraph>
-          <Row gutter={[24, 24]} justify="center">
-            <Col xs={24} md={8}>
+      {/* Pricing Section */}
+      <section style={{
+        padding: `${sectionPadding}px ${getResponsiveValue(16, 20, 40)}px`,
+        background: "white"
+      }}>
+        <div style={{ maxWidth: `${contentMaxWidth}px`, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: getResponsiveValue(40, 50, 60) }}>
+            <Title 
+              level={2} 
+              style={{ 
+                marginBottom: getResponsiveValue(16, 20, 24),
+                fontSize: sectionTitleFontSize
+              }}
+            >
+              Choose Your Plan
+            </Title>
+            <Paragraph style={{
+              fontSize: bodyFontSize,
+              maxWidth: "600px",
+              margin: "0 auto",
+              lineHeight: "1.6",
+              color: "#666"
+            }}>
+              Start free and scale as you grow
+            </Paragraph>
+          </div>
+          
+          <Row gutter={[gridGutter, gridGutter]} justify="center">
+            <Col xs={24} sm={12} lg={8}>
               <Card 
-                bordered={false} 
-                style={{ textAlign: "center", borderRadius: 16, border: "2px solid #f0f0f0" }}
-                hoverable
+                style={{ 
+                  textAlign: "center", 
+                  borderRadius: `${cardBorderRadius}px`,
+                  border: "2px solid #e8e8e8",
+                  height: "100%",
+                  padding: `${cardPadding}px`
+                }}
               >
-                <Title level={3}>Free</Title>
-                <Title level={1} style={{ color: "#1890ff" }}>$0</Title>
-                <Paragraph style={{ fontSize: 16 }}>Perfect for getting started</Paragraph>
-                <Divider />
-                <ul style={{ textAlign: "left", paddingLeft: 20 }}>
-                  <li>100 messages/month</li>
-                  <li>Basic AI responses</li>
-                  <li>Email support</li>
-                  <li>Standard templates</li>
+                <Title level={3} style={{ 
+                  color: "#1890ff", 
+                  marginBottom: getResponsiveValue(12, 14, 16),
+                  fontSize: getResponsiveValue(fontSizes.xl, fontSizes.xxl, fontSizes.xxxl)
+                }}>
+                  Free
+                </Title>
+                <div style={{ marginBottom: getResponsiveValue(24, 28, 32) }}>
+                  <Text style={{ 
+                    fontSize: getResponsiveValue(36, 42, 48), 
+                    fontWeight: "bold" 
+                  }}>
+                    $0
+                  </Text>
+                  <Text style={{ 
+                    fontSize: bodyFontSize, 
+                    color: "#666" 
+                  }}>
+                    /month
+                  </Text>
+                </div>
+                <ul style={{ 
+                  listStyle: "none", 
+                  padding: 0, 
+                  margin: `0 0 ${getResponsiveValue(24, 28, 32)}px 0`,
+                  textAlign: "left"
+                }}>
+                  <li style={{ marginBottom: getResponsiveValue(8, 10, 12) }}>
+                    <CheckCircleOutlined style={{ color: "#52c41a", marginRight: "8px" }} />
+                    Up to 100 chats/month
+                  </li>
+                  <li style={{ marginBottom: getResponsiveValue(8, 10, 12) }}>
+                    <CheckCircleOutlined style={{ color: "#52c41a", marginRight: "8px" }} />
+                    Basic AI responses
+                  </li>
+                  <li style={{ marginBottom: getResponsiveValue(8, 10, 12) }}>
+                    <CheckCircleOutlined style={{ color: "#52c41a", marginRight: "8px" }} />
+                    Email support
+                  </li>
                 </ul>
-                <Button type="default" size="large" style={{ marginTop: 16 }}>
-                  Start Free
+                <Button 
+                  type="default" 
+                  size="large" 
+                  style={{ 
+                    width: "100%", 
+                    borderRadius: "8px",
+                    height: `${buttonHeight}px`,
+                    fontSize: buttonFontSize
+                  }}
+                >
+                  Get Started Free
                 </Button>
               </Card>
             </Col>
-            <Col xs={24} md={8}>
+            
+            <Col xs={24} sm={12} lg={8}>
               <Card 
-                bordered={false} 
                 style={{ 
                   textAlign: "center", 
-                  borderRadius: 16, 
+                  borderRadius: `${cardBorderRadius}px`,
                   border: "2px solid #1890ff",
-                  transform: "scale(1.05)",
-                  boxShadow: "0 8px 25px rgba(24, 144, 255, 0.15)"
+                  height: "100%",
+                  position: "relative",
+                  padding: `${cardPadding}px`
                 }}
-                hoverable
               >
-                <div style={{ 
-                  background: "#1890ff", 
-                  color: "white", 
-                  padding: "8px 16px", 
-                  borderRadius: "20px", 
-                  fontSize: 12,
-                  marginBottom: 16,
-                  display: "inline-block"
+                <div style={{
+                  position: "absolute",
+                  top: "-12px",
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  background: "#1890ff",
+                  color: "white",
+                  padding: "4px 16px",
+                  borderRadius: "20px",
+                  fontSize: getResponsiveValue(fontSizes.xs, fontSizes.sm, fontSizes.sm),
+                  fontWeight: "bold"
                 }}>
                   MOST POPULAR
                 </div>
-                <Title level={3}>Pro</Title>
-                <Title level={1} style={{ color: "#1890ff" }}>$29</Title>
-                <Paragraph style={{ fontSize: 16 }}>For growing businesses</Paragraph>
-                <Divider />
-                <ul style={{ textAlign: "left", paddingLeft: 20 }}>
-                  <li>10,000 messages/month</li>
-                  <li>Advanced AI with custom training</li>
-                  <li>Priority support</li>
-                  <li>Custom integrations</li>
-                  <li>Analytics dashboard</li>
+                <Title level={3} style={{ 
+                  color: "#1890ff", 
+                  marginBottom: getResponsiveValue(12, 14, 16), 
+                  marginTop: getResponsiveValue(12, 14, 16),
+                  fontSize: getResponsiveValue(fontSizes.xl, fontSizes.xxl, fontSizes.xxxl)
+                }}>
+                  Pro
+                </Title>
+                <div style={{ marginBottom: getResponsiveValue(24, 28, 32) }}>
+                  <Text style={{ 
+                    fontSize: getResponsiveValue(36, 42, 48), 
+                    fontWeight: "bold" 
+                  }}>
+                    $29
+                  </Text>
+                  <Text style={{ 
+                    fontSize: bodyFontSize, 
+                    color: "#666" 
+                  }}>
+                    /month
+                  </Text>
+                </div>
+                <ul style={{ 
+                  listStyle: "none", 
+                  padding: 0, 
+                  margin: `0 0 ${getResponsiveValue(24, 28, 32)}px 0`,
+                  textAlign: "left"
+                }}>
+                  <li style={{ marginBottom: getResponsiveValue(8, 10, 12) }}>
+                    <CheckCircleOutlined style={{ color: "#52c41a", marginRight: "8px" }} />
+                    Up to 1,000 chats/month
+                  </li>
+                  <li style={{ marginBottom: getResponsiveValue(8, 10, 12) }}>
+                    <CheckCircleOutlined style={{ color: "#52c41a", marginRight: "8px" }} />
+                    Advanced AI responses
+                  </li>
+                  <li style={{ marginBottom: getResponsiveValue(8, 10, 12) }}>
+                    <CheckCircleOutlined style={{ color: "#52c41a", marginRight: "8px" }} />
+                    Priority support
+                  </li>
+                  <li style={{ marginBottom: getResponsiveValue(8, 10, 12) }}>
+                    <CheckCircleOutlined style={{ color: "#52c41a", marginRight: "8px" }} />
+                    Custom branding
+                  </li>
                 </ul>
-                <Button type="primary" size="large" style={{ marginTop: 16 }}>
-                  Start Pro
+                <Button 
+                  type="primary" 
+                  size="large" 
+                  onClick={handleGetStarted}
+                  style={{ 
+                    width: "100%", 
+                    borderRadius: "8px",
+                    height: `${buttonHeight}px`,
+                    fontSize: buttonFontSize
+                  }}
+                >
+                  Start Pro Trial
                 </Button>
               </Card>
             </Col>
-            <Col xs={24} md={8}>
+            
+            <Col xs={24} sm={12} lg={8}>
               <Card 
-                bordered={false} 
-                style={{ textAlign: "center", borderRadius: 16, border: "2px solid #f0f0f0" }}
-                hoverable
+                style={{ 
+                  textAlign: "center", 
+                  borderRadius: `${cardBorderRadius}px`,
+                  border: "2px solid #e8e8e8",
+                  height: "100%",
+                  padding: `${cardPadding}px`
+                }}
               >
-                <Title level={3}>Enterprise</Title>
-                <Title level={1} style={{ color: "#1890ff" }}>Custom</Title>
-                <Paragraph style={{ fontSize: 16 }}>For large organizations</Paragraph>
-                <Divider />
-                <ul style={{ textAlign: "left", paddingLeft: 20 }}>
-                  <li>Unlimited messages</li>
-                  <li>Custom AI models</li>
-                  <li>Dedicated support</li>
-                  <li>White-label solution</li>
-                  <li>Advanced security</li>
+                <Title level={3} style={{ 
+                  color: "#722ed1", 
+                  marginBottom: getResponsiveValue(12, 14, 16),
+                  fontSize: getResponsiveValue(fontSizes.xl, fontSizes.xxl, fontSizes.xxxl)
+                }}>
+                  Enterprise
+                </Title>
+                <div style={{ marginBottom: getResponsiveValue(24, 28, 32) }}>
+                  <Text style={{ 
+                    fontSize: getResponsiveValue(36, 42, 48), 
+                    fontWeight: "bold" 
+                  }}>
+                    Custom
+                  </Text>
+                </div>
+                <ul style={{ 
+                  listStyle: "none", 
+                  padding: 0, 
+                  margin: `0 0 ${getResponsiveValue(24, 28, 32)}px 0`,
+                  textAlign: "left"
+                }}>
+                  <li style={{ marginBottom: getResponsiveValue(8, 10, 12) }}>
+                    <CheckCircleOutlined style={{ color: "#52c41a", marginRight: "8px" }} />
+                    Unlimited chats
+                  </li>
+                  <li style={{ marginBottom: getResponsiveValue(8, 10, 12) }}>
+                    <CheckCircleOutlined style={{ color: "#52c41a", marginRight: "8px" }} />
+                    Custom AI training
+                  </li>
+                  <li style={{ marginBottom: getResponsiveValue(8, 10, 12) }}>
+                    <CheckCircleOutlined style={{ color: "#52c41a", marginRight: "8px" }} />
+                    Dedicated support
+                  </li>
+                  <li style={{ marginBottom: getResponsiveValue(8, 10, 12) }}>
+                    <CheckCircleOutlined style={{ color: "#52c41a", marginRight: "8px" }} />
+                    White-label solution
+                  </li>
                 </ul>
-                <Button type="default" size="large" style={{ marginTop: 16 }}>
+                <Button 
+                  type="default" 
+                  size="large" 
+                  style={{ 
+                    width: "100%", 
+                    borderRadius: "8px",
+                    height: `${buttonHeight}px`,
+                    fontSize: buttonFontSize
+                  }}
+                >
                   Contact Sales
                 </Button>
               </Card>
             </Col>
           </Row>
         </div>
+      </section>
 
-        {/* Final CTA Section */}
-        <div style={{ 
-          background: "linear-gradient(135deg, #1890ff 0%, #722ed1 100%)",
-          borderRadius: 20,
-          padding: 60,
-          textAlign: "center",
-          color: "white",
-          marginBottom: 40
-        }}>
-          <Title level={2} style={{ color: "white", marginBottom: 16 }}>
-            Ready to Transform Your Customer Service?
+      {/* Footer */}
+      <footer style={{
+        background: "#001529",
+        color: "white",
+        padding: `${getResponsiveValue(30, 40, 60)}px ${getResponsiveValue(16, 20, 40)}px`
+      }}>
+        <div style={{ maxWidth: `${contentMaxWidth}px`, margin: "0 auto" }}>
+          <Row gutter={[gridGutter, gridGutter]}>
+            <Col xs={24} sm={12} md={8}>
+              <div style={{ marginBottom: getResponsiveValue(24, 28, 32) }}>
+                <div style={{ display: "flex", alignItems: "center", marginBottom: getResponsiveValue(16, 20, 24) }}>
+                  <RobotOutlined style={{ 
+                    fontSize: getResponsiveValue(24, 28, 32), 
+                    color: "#1890ff", 
+                    marginRight: getResponsiveValue(8, 10, 12) 
+                  }} />
+                  <Title level={3} style={{ 
+                    color: "white", 
+                    margin: 0,
+                    fontSize: getResponsiveValue(fontSizes.xl, fontSizes.xxl, fontSizes.xxxl)
+                  }}>
+                    AI Chat Pro
+                  </Title>
+                </div>
+                <Paragraph style={{ 
+                  color: "#8c8c8c", 
+                  lineHeight: "1.6",
+                  fontSize: bodyFontSize
+                }}>
+                  Transforming customer service with intelligent AI solutions that work 24/7, 
+                  speak multiple languages, and integrate seamlessly with your business.
+                </Paragraph>
+              </div>
+            </Col>
+            
+            <Col xs={24} sm={12} md={8}>
+              <Title level={4} style={{ 
+                color: "white", 
+                marginBottom: getResponsiveValue(16, 20, 24),
+                fontSize: getResponsiveValue(fontSizes.lg, fontSizes.xl, fontSizes.xxl)
+              }}>
+                Contact Info
+              </Title>
+              <div style={{ marginBottom: getResponsiveValue(12, 14, 16) }}>
+                <PhoneOutlined style={{ marginRight: "8px", color: "#1890ff" }} />
+                <Text style={{ 
+                  color: "#8c8c8c",
+                  fontSize: bodyFontSize
+                }}>
+                  +1 (555) 123-4567
+                </Text>
+              </div>
+              <div style={{ marginBottom: getResponsiveValue(12, 14, 16) }}>
+                <MailOutlined style={{ marginRight: "8px", color: "#1890ff" }} />
+                <Text style={{ 
+                  color: "#8c8c8c",
+                  fontSize: bodyFontSize
+                }}>
+                  hello@aichatpro.com
+                </Text>
+              </div>
+              <div style={{ marginBottom: getResponsiveValue(12, 14, 16) }}>
+                <UserOutlined style={{ marginRight: "8px", color: "#1890ff" }} />
+                <Text style={{ 
+                  color: "#8c8c8c",
+                  fontSize: bodyFontSize
+                }}>
+                  support@aichatpro.com
+                </Text>
+              </div>
+            </Col>
+            
+            <Col xs={24} sm={12} md={8}>
+              <Title level={4} style={{ 
+                color: "white", 
+                marginBottom: getResponsiveValue(16, 20, 24),
+                fontSize: getResponsiveValue(fontSizes.lg, fontSizes.xl, fontSizes.xxl)
+              }}>
+                Follow Us
+              </Title>
+              <Space size="large">
+                <LinkedinOutlined style={{ 
+                  fontSize: getResponsiveValue(20, 22, 24), 
+                  color: "#1890ff", 
+                  cursor: "pointer" 
+                }} />
+                <TwitterOutlined style={{ 
+                  fontSize: getResponsiveValue(20, 22, 24), 
+                  color: "#1890ff", 
+                  cursor: "pointer" 
+                }} />
+                <GithubOutlined style={{ 
+                  fontSize: getResponsiveValue(20, 22, 24), 
+                  color: "#1890ff", 
+                  cursor: "pointer" 
+                }} />
+              </Space>
+              <div style={{ marginTop: getResponsiveValue(16, 20, 24) }}>
+                <Text style={{ 
+                  color: "#8c8c8c",
+                  fontSize: bodyFontSize
+                }}>
+                  © 2024 AI Chat Pro. All rights reserved.
+                </Text>
+              </div>
+            </Col>
+          </Row>
+        </div>
+      </footer>
+
+      {/* Final CTA Section */}
+      <section style={{
+        background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+        color: "white",
+        padding: `${getResponsiveValue(40, 60, 80)}px ${getResponsiveValue(16, 20, 40)}px`,
+        textAlign: "center"
+      }}>
+        <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+          <Title 
+            level={2} 
+            style={{ 
+              color: "white", 
+              marginBottom: getResponsiveValue(16, 20, 24),
+              fontSize: sectionTitleFontSize
+            }}
+          >
+            Ready to Get Started?
           </Title>
-          <Paragraph style={{ color: "rgba(255,255,255,0.9)", fontSize: 18, marginBottom: 32 }}>
-            Join thousands of businesses already using AI Chat Pro to delight their customers
+          
+          <Paragraph style={{
+            fontSize: bodyFontSize,
+            marginBottom: getResponsiveValue(24, 32, 40),
+            opacity: 0.9,
+            lineHeight: "1.6"
+          }}>
+            Join thousands of businesses already using AI Chat Pro to transform their customer service.
+            Start your free trial today and see the difference AI can make.
           </Paragraph>
+          
           <Button 
             type="primary" 
-            size="large" 
-            style={{ 
-              background: "white", 
-              color: "#1890ff", 
-              border: "none",
-              height: 48,
-              padding: "0 32px",
-              fontSize: 16
-            }}
+            size="large"
             onClick={handleGetStarted}
+            style={{
+              height: `${buttonHeight}px`,
+              fontSize: buttonFontSize,
+              padding: `0 ${buttonPadding}px`,
+              borderRadius: "8px",
+              background: "#ffd700",
+              border: "none",
+              color: "#333"
+            }}
           >
             Get Started Now
           </Button>
         </div>
-      </Content>
-
-      {/* Footer */}
-      <Footer style={{ 
-        background: "#001529", 
-        color: "white", 
-        padding: "60px 50px 30px"
-      }}>
-        <Row gutter={[40, 40]}>
-          <Col xs={24} md={8}>
-            <div style={{ display: "flex", alignItems: "center", marginBottom: 24 }}>
-              <RobotOutlined style={{ fontSize: 32, color: "#1890ff", marginRight: 12 }} />
-              <Title level={3} style={{ color: "white", margin: 0 }}>
-                AI Chat Pro
-              </Title>
-            </div>
-            <Paragraph style={{ color: "rgba(255,255,255,0.7)", fontSize: 16 }}>
-              Empowering businesses with intelligent AI chat solutions for better customer experiences.
-            </Paragraph>
-            <Space size="large" style={{ marginTop: 16 }}>
-              <GithubOutlined style={{ fontSize: 24, color: "rgba(255,255,255,0.7)" }} />
-              <LinkedinOutlined style={{ fontSize: 24, color: "rgba(255,255,255,0.7)" }} />
-              <TwitterOutlined style={{ fontSize: 24, color: "rgba(255,255,255,0.7)" }} />
-            </Space>
-          </Col>
-          <Col xs={24} md={8}>
-            <Title level={4} style={{ color: "white", marginBottom: 24 }}>
-              Quick Links
-            </Title>
-            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-              <Text style={{ color: "rgba(255,255,255,0.7)", cursor: "pointer" }}>Features</Text>
-              <Text style={{ color: "rgba(255,255,255,0.7)", cursor: "pointer" }}>Pricing</Text>
-              <Text style={{ color: "rgba(255,255,255,0.7)", cursor: "pointer" }}>Documentation</Text>
-              <Text style={{ color: "rgba(255,255,255,0.7)", cursor: "pointer" }}>API Reference</Text>
-            </div>
-          </Col>
-          <Col xs={24} md={8}>
-            <Title level={4} style={{ color: "white", marginBottom: 24 }}>
-              Contact Info
-            </Title>
-            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <MailOutlined style={{ color: "rgba(255,255,255,0.7)" }} />
-                <Text style={{ color: "rgba(255,255,255,0.7)" }}>hello@aichatpro.com</Text>
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <PhoneOutlined style={{ color: "rgba(255,255,255,0.7)" }} />
-                <Text style={{ color: "rgba(255,255,255,0.7)" }}>+1 (555) 123-4567</Text>
-              </div>
-            </div>
-          </Col>
-        </Row>
-        <Divider style={{ borderColor: "rgba(255,255,255,0.1)", margin: "40px 0 20px" }} />
-        <div style={{ textAlign: "center", color: "rgba(255,255,255,0.7)" }}>
-          © {new Date().getFullYear()} AI Chat Pro. All rights reserved.
-        </div>
-      </Footer>
-    </Layout>
+      </section>
+    </div>
   );
 };
 
-export default LandingPage;
+export default Landing;
