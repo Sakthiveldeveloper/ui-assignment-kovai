@@ -7,7 +7,7 @@ import {
   SendOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import { useResponsive } from "../hooks/useResponsive";
+
 import "./Chat.css";
 
 const { Header, Content } = Layout;
@@ -23,7 +23,6 @@ interface Message {
 
 const Chat: React.FC = () => {
   const navigate = useNavigate();
-  const { isMobile, isTablet } = useResponsive();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
