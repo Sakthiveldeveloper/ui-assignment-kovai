@@ -14,7 +14,7 @@ import {
   GithubOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import "./Landing.css";
+import "../style/Landing.css";
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -27,7 +27,6 @@ const Landing: React.FC = () => {
 
   return (
     <div className="landing-container">
-      {/* Hero Section */}
       <section className="hero-section">
         <div className="hero-content">
           <Title level={1} className="hero-title">
@@ -59,7 +58,6 @@ const Landing: React.FC = () => {
           </Space>
         </div>
         
-        {/* Floating Elements */}
         <div className="floating-element left">
           <RobotOutlined style={{ fontSize: 50 }} />
         </div>
@@ -68,7 +66,6 @@ const Landing: React.FC = () => {
         </div>
       </section>
 
-      {/* About Section */}
       <section className="section section-white">
         <div className="section-content">
           <Title level={2} className="section-title">
@@ -135,7 +132,6 @@ const Landing: React.FC = () => {
         </div>
       </section>
 
-      {/* Features Section */}
       <section className="section section-gray">
         <div className="section-content">
           <div style={{ marginBottom: 60 }}>
@@ -205,7 +201,6 @@ const Landing: React.FC = () => {
         </div>
       </section>
 
-      {/* Pricing Section */}
       <section className="section section-white">
         <div className="section-content">
           <div style={{ marginBottom: 60 }}>
@@ -320,7 +315,6 @@ const Landing: React.FC = () => {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="footer">
         <div className="footer-content">
           <Row gutter={[32, 32]}>
@@ -382,7 +376,6 @@ const Landing: React.FC = () => {
         </div>
       </footer>
 
-      {/* Final CTA Section */}
       <section className="final-cta">
         <div className="final-cta-content">
           <Title level={2} className="final-cta-title">

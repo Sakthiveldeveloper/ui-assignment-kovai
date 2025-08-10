@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Landing from "./pages/Landing";
-import Dashboard from "./pages/Dashboard";
-import Chat from "./pages/Chat";
+import Landing from "./component/Landing";
+import Dashboard from "./component/Dashboard";
+import Chat from "./component/Chat";
 
 const App: React.FC = () => {
   return (
